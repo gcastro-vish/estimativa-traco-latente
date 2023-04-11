@@ -22,19 +22,9 @@ estimate_latent_trace = function(model, params, pattern){
   
   mo = generate.mirt_object(parameters = params, itemtype = model)
   
-  scores = fscores(mo, response.pattern = pattern)
+  scores = fscores(mo, response.pattern = pattern, method = "EAP")
   colnames(scores) = c('Estimativa', 'Erro Padrão')
   
-  return(scores)
-}
-
-estimate_latent_trace = function(model, params, pattern){
-
-  mo = generate.mirt_object(parameters = params, itemtype = model)
-
-  scores = fscores(mo, response.pattern = pattern)
-  colnames(scores) = c('Estimativa', 'Erro Padrão')
-
   return(scores)
 }
 
