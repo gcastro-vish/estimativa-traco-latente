@@ -42,7 +42,9 @@ estimate_latent_trace = function(model, params, pattern, method){
 
 # User interface ----
 ui <- fluidPage(
-  wellPanel(titlePanel("Estimativa do traço latente utilizando o ML3 e com parâmetros dos itens conhecidos")),
+  wellPanel(titlePanel("Estimativa do traço latente utilizando o ML3 e com parâmetros dos itens conhecidos"),
+            hr(),
+            h4("As estimativas foram feitas utilizando o pacote mirt")),
   hr(),
   # Copy the line below to make a set of radio buttons
   fluidRow(
