@@ -2,7 +2,6 @@ library(shiny)
 
 library(mirt)
 library(mirtCAT)
-library(shiny)
 
 createParams = function(input){
   a1 = c(input$a1, input$a2, input$a3, input$a4, input$a5)
