@@ -36,6 +36,8 @@ ui <- fluidPage(
     choices = list("Esperança à posteriori" = "EAP", "Moda à posteriori" = "MAP", "Máxima verossimilhança" = "ML"), 
     selected = "EAP"),
 
+  h3("Parâmetros do modelo"),
+  
   fluidRow(
     column(width = 2, helpText('Discriminação 1'),
            numericInput("a1", "a_1", 1.8)
@@ -92,13 +94,14 @@ ui <- fluidPage(
   
   fluidRow(
     wellPanel(
-      helpText("Padrão de resposta"),
+      h3("Padrão de resposta"),
       checkboxGroupInput('pattern', 'Quais itens o aluno(a) acertou?',
                          choices = list('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'))
                          # selected = list('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'))
     )
   ),
   
+  h3("Estimativa do traço latente"),
   tableOutput('score')
 )
 
