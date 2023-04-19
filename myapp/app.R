@@ -21,11 +21,11 @@ createMethod = function(input){
   return(as.character(input$method))
 }
 
-estimate_latent_trace = function(model, params, pattern, meth){
+estimate_latent_trace = function(model, params, pattern, method){
   
   mo = generate.mirt_object(parameters = params, itemtype = model)
   
-  scores = fscores(mo, response.pattern = pattern, method = meth)
+  scores = fscores(mo, response.pattern = pattern, method = method)
   colnames(scores) = c('Estimativa', 'Erro Padrão')
   
   return(scores)
@@ -119,7 +119,7 @@ server <- function(input, output) {
   output$score = renderTable({estimate_latent_trace(model = '3PL',
                                                     params = par(),
                                                     pattern = pat(),
-                                                    meth = met())})
+                                                    method = met())})
   
 }
 
