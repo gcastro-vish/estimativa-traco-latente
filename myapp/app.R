@@ -4,10 +4,23 @@ library(mirt)
 library(mirtCAT)
 
 createParams = function(input){
-  a1 = c(input$a1, input$a2, input$a3, input$a4, input$a5)
-  d = c(input$b1, input$b2, input$b3, input$b4, input$b5)
-  g = c(input$c1, input$c2, input$c3, input$c4, input$c5)
-  params = data.frame('a1' = a1, 'd' = d, 'g' = g)
+  if(input$model == 'Rasch'){
+       a1 = rep(0, 5)
+       d = c(input$b1, input$b2, input$b3, input$b4, input$b5)
+       params = data.frame('a1' = a1, 'd' = d)
+  }
+  else if(input$model == '2PL'){
+       a1 = c(input$a1, input$a2, input$a3, input$a4, input$a5)
+       d = c(input$b1, input$b2, input$b3, input$b4, input$b5)
+       params = data.frame('a1' = a1, 'd' = d)
+  }
+  else if(input$model == '3PL'){
+       a1 = c(input$a1, input$a2, input$a3, input$a4, input$a5)
+       d = c(input$b1, input$b2, input$b3, input$b4, input$b5)
+       g = c(input$c1, input$c2, input$c3, input$c4, input$c5)
+       params = data.frame('a1' = a1, 'd' = d, 'g' = g)
+  }
+  
   return(params)
 }
 
@@ -32,28 +45,40 @@ ui <- fluidPage(
   wellPanel(titlePanel("Estimativa do traço latente utilizando o ML3 e com parâmetros dos itens conhecidos")),
   hr(),
   # Copy the line below to make a set of radio buttons
-  radioButtons("method", label = h3("Método de Estimação"),
-    choices = list("Esperança à posteriori" = "EAP", "Moda à posteriori" = "MAP", "Máxima verossimilhança" = "ML"), 
-    selected = "EAP"),
+  fluidRow(
+    column(width = 4,
+           radioButtons("method", label = h3("Método de Estimação"),
+                        choices = list("Máxima verossimilhança" = "ML", "Moda à posteriori" = "MAP", "Esperança à posteriori" = "EAP"), 
+                        selected = "ML"),
+    ),
+    column(width = 4,
+           radioButtons("model", label = h3("Modelo"),
+                        choices = list(#"Rasch" = "Rasch",
+                                       "Logístico 2 Parâmetros" = "2PL", "Logístico 3 Parâmetros" = "3PL"), 
+                        selected = "2PL"),
+    )
+  ),
   hr(),
   h3("Parâmetros do modelo"),
   
-  fluidRow(
-    column(width = 2, helpText('Discriminação 1'),
-           numericInput("a1", "a_1", 1.8)
-    ),
-    column(width = 2, helpText('Discriminação 2'),
-           numericInput("a2", "a_2", 1.8)
-    ),
-    column(width = 2, helpText('Discriminação 3'),
-           numericInput("a3", "a_3", 1.8)
-    ),
-    column(width = 2, helpText('Discriminação 4'),
-           numericInput("a4", "a_4", 1.8)
-    ),
-    column(width = 2, helpText('Discriminação 5'),
-           numericInput("a5", "a_5", 1.8)
-    )
+  conditionalPanel(condition = "input.model == '2PL' | input.model == '3PL'",
+       fluidRow(
+       column(width = 2, helpText('Discriminação 1'),
+              numericInput("a1", "a_1", 1.8)
+       ),
+       column(width = 2, helpText('Discriminação 2'),
+              numericInput("a2", "a_2", 1.8)
+       ),
+       column(width = 2, helpText('Discriminação 3'),
+              numericInput("a3", "a_3", 1.8)
+       ),
+       column(width = 2, helpText('Discriminação 4'),
+              numericInput("a4", "a_4", 1.8)
+       ),
+       column(width = 2, helpText('Discriminação 5'),
+              numericInput("a5", "a_5", 1.8)
+       )
+       )
   ),
   
   fluidRow(
@@ -74,22 +99,24 @@ ui <- fluidPage(
     )
   ),
   
-  fluidRow(
-    column(width = 2, helpText('Acerto ao acaso 1'),
-           numericInput("c1", "c_1", 0.2)
-    ),
-    column(width = 2, helpText('Acerto ao acaso 2'),
-           numericInput("c2", "c_2", 0.2)
-    ),
-    column(width = 2, helpText('Acerto ao acaso 3'),
-           numericInput("c3", "c_3", 0.2)
-    ),
-    column(width = 2, helpText('Acerto ao acaso 4'),
-           numericInput("c4", "c_4", 0.2)
-    ),
-    column(width = 2, helpText('Acerto ao acaso 5'),
-           numericInput("c5", "c_5", 0.2)
-    )
+  conditionalPanel(condition = "input.model == '3PL'",
+       fluidRow(
+       column(width = 2, helpText('Acerto ao acaso 1'),
+              numericInput("c1", "c_1", 0.2)
+       ),
+       column(width = 2, helpText('Acerto ao acaso 2'),
+              numericInput("c2", "c_2", 0.2)
+       ),
+       column(width = 2, helpText('Acerto ao acaso 3'),
+              numericInput("c3", "c_3", 0.2)
+       ),
+       column(width = 2, helpText('Acerto ao acaso 4'),
+              numericInput("c4", "c_4", 0.2)
+       ),
+       column(width = 2, helpText('Acerto ao acaso 5'),
+              numericInput("c5", "c_5", 0.2)
+       )
+       )
   ),
   hr(),
   h3("Padrão de resposta"),
@@ -111,10 +138,28 @@ server <- function(input, output) {
 
   met = reactive({input$method})
 
-  output$score = renderTable({estimate_latent_trace(model = '3PL',
-                                                    params = par(),
-                                                    pattern = pat(),
-                                                    method = met())})
+  mod = reactive({input$model})
+
+#   reactive({
+#        if(mod() == '3PL'){
+#               output$score = renderTable({estimate_latent_trace(model = mod(),
+#                                                         params = par(),
+#                                                         pattern = pat(),
+#                                                         method = met())})
+#        }
+
+#        else{
+#               output$score = renderTable({estimate_latent_trace(model = '2PL',
+#                                                         params = par(),
+#                                                         pattern = pat(),
+#                                                         method = met())}) 
+#        }
+#   })
+  
+  output$score = renderTable({estimate_latent_trace(model = mod(),
+                                                   params = par(),
+                                                   pattern = pat(),
+                                                   method = met())})
   
 }
 
