@@ -17,11 +17,11 @@ createPattern = function(input, items = c('Item 1', 'Item 2', 'Item 3', 'Item 4'
   return(response_pattern)
 }
 
-estimate_latent_trace = function(model, params, pattern){
+estimate_latent_trace = function(model, params, pattern, meth){
   
   mo = generate.mirt_object(parameters = params, itemtype = model)
   
-  scores = fscores(mo, response.pattern = pattern, method = "EAP")
+  scores = fscores(mo, response.pattern = pattern, method = meth)
   colnames(scores) = c('Estimativa', 'Erro Padrão')
   
   return(scores)
@@ -35,7 +35,7 @@ ui <- fluidPage(
   radioButtons("method", label = h3("Método de Estimação"),
     choices = list("Esperança à posteriori" = "EAP", "Moda à posteriori" = "MAP", "Máxima verossimilhança" = "ML"), 
     selected = "EAP"),
-
+  
   h3("Parâmetros do modelo"),
   
   fluidRow(
@@ -97,7 +97,6 @@ ui <- fluidPage(
       h3("Padrão de resposta"),
       checkboxGroupInput('pattern', 'Quais itens o aluno(a) acertou?',
                          choices = list('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'))
-                         # selected = list('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'))
     )
   ),
   
