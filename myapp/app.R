@@ -33,13 +33,13 @@ estimate_latent_trace = function(model, params, pattern, method){
 
 # User interface ----
 ui <- fluidPage(
-  titlePanel("Estimativa do traço latente utilizando o ML3 e com parâmetros dos itens conhecidos"),
-  
+  wellPanel(titlePanel("Estimativa do traço latente utilizando o ML3 e com parâmetros dos itens conhecidos")),
+  hr(),
   # Copy the line below to make a set of radio buttons
   radioButtons("method", label = h3("Método de Estimação"),
     choices = list("Esperança à posteriori" = "EAP", "Moda à posteriori" = "MAP", "Máxima verossimilhança" = "ML"), 
     selected = "EAP"),
-  
+  hr(),
   h3("Parâmetros do modelo"),
   
   fluidRow(
@@ -95,16 +95,15 @@ ui <- fluidPage(
            numericInput("c5", "c_5", 0.2)
     )
   ),
-  
+  hr(),
+  h3("Padrão de resposta"),
   fluidRow(
-    wellPanel(
-      h3("Padrão de resposta"),
+      column(width = 5,
       checkboxGroupInput('pattern', 'Quais itens o aluno(a) acertou?',
-                         choices = list('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'))
-    )
+                         choices = list('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5')))
   ),
-  
-  h3("Estimativa do traço latente"),
+  hr(),
+  h2("Estimativa do traço latente"),
   tableOutput('score')
 )
 
