@@ -49,7 +49,7 @@ Depois de todas as configurações de ambientes, para executar o aplicativo bast
 
   ```R
   setwd('pasta/estimativa-traco-latente')
-  shinny::runApp('myapp/app.R')
+  shiny::runApp('myapp/app.R')
   ```
 ### Execução sem o R
 
