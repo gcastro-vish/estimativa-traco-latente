@@ -113,10 +113,13 @@ server <- function(input, output) {
   par = reactive({createParams(input)})
   
   pat = reactive({createPattern(input)})
+
+  met = reactive({createMethod(input)})
   
   output$score = renderTable({estimate_latent_trace(model = '3PL',
                                                     params = par(),
-                                                    pattern = pat())})
+                                                    pattern = pat(),
+                                                    meth = met())})
   
 }
 
