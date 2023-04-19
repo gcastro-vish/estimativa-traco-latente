@@ -31,6 +31,11 @@ estimate_latent_trace = function(model, params, pattern){
 ui <- fluidPage(
   titlePanel("Estimativa do traço latente utilizando o ML3 e com parâmetros dos itens conhecidos"),
   
+  # Copy the line below to make a set of radio buttons
+  radioButtons("method", label = h3("Método de Estimação"),
+    choices = list("Esperança à posteriori" = "EAP", "Moda à posteriori" = "MAP", "Máxima verossimilhança" = "ML"), 
+    selected = "EAP"),
+
   fluidRow(
     column(width = 2, helpText('Discriminação 1'),
            numericInput("a1", "a_1", 1.8)
