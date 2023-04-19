@@ -17,10 +17,6 @@ createPattern = function(input, items = c('Item 1', 'Item 2', 'Item 3', 'Item 4'
   return(response_pattern)
 }
 
-createMethod = function(input){
-  return(as.character(input$method))
-}
-
 estimate_latent_trace = function(model, params, pattern, method){
   
   mo = generate.mirt_object(parameters = params, itemtype = model)
@@ -113,8 +109,8 @@ server <- function(input, output) {
   
   pat = reactive({createPattern(input)})
 
-  met = reactive({createMethod(input)})
-  
+  met = reactive({input$method})
+
   output$score = renderTable({estimate_latent_trace(model = '3PL',
                                                     params = par(),
                                                     pattern = pat(),
