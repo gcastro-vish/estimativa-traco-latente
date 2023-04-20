@@ -5,7 +5,9 @@ account: gabrielcgr
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8758480
-bundleId: 7046089
+bundleId: 7107913
 url: https://gabrielcgr.shinyapps.io/myapp/
-when: 1680582259.09842
-lastSyncTime: 1680582259.09843
+when: 1681885503.18688
+lastSyncTime: 1681885503.18689
+asMultiple: FALSE
+asStatic: FALSE
