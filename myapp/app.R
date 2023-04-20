@@ -5,7 +5,7 @@ library(mirtCAT)
 
 createParams = function(input){
   if(input$model == 'Rasch'){
-       a1 = rep(0, 5)
+       a1 = rep(1, 5)
        d = c(input$b1, input$b2, input$b3, input$b4, input$b5)
        params = data.frame('a1' = a1, 'd' = d)
   }
@@ -46,7 +46,6 @@ ui <- fluidPage(
             hr(),
             h4("As estimativas foram feitas utilizando o pacote mirt")),
   hr(),
-  # Copy the line below to make a set of radio buttons
   fluidRow(
     column(width = 4,
            radioButtons("method", label = h3("Método de Estimação"),
@@ -55,9 +54,8 @@ ui <- fluidPage(
     ),
     column(width = 4,
            radioButtons("model", label = h3("Modelo"),
-                        choices = list(#"Rasch" = "Rasch",
-                                       "Logístico 2 Parâmetros" = "2PL", "Logístico 3 Parâmetros" = "3PL"), 
-                        selected = "2PL"),
+                        choices = list("Rasch" = "Rasch", "Logístico 2 Parâmetros" = "2PL", "Logístico 3 Parâmetros" = "3PL"), 
+                        selected = "Rasch"),
     )
   ),
   hr(),
@@ -141,22 +139,6 @@ server <- function(input, output) {
   met = reactive({input$method})
 
   mod = reactive({input$model})
-
-#   reactive({
-#        if(mod() == '3PL'){
-#               output$score = renderTable({estimate_latent_trace(model = mod(),
-#                                                         params = par(),
-#                                                         pattern = pat(),
-#                                                         method = met())})
-#        }
-
-#        else{
-#               output$score = renderTable({estimate_latent_trace(model = '2PL',
-#                                                         params = par(),
-#                                                         pattern = pat(),
-#                                                         method = met())}) 
-#        }
-#   })
   
   output$score = renderTable({estimate_latent_trace(model = mod(),
                                                    params = par(),
