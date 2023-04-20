@@ -11,12 +11,12 @@ createParams = function(input){
   }
   else if(input$model == '2PL'){
        a1 = c(input$a1, input$a2, input$a3, input$a4, input$a5)
-       d = c(input$b1, input$b2, input$b3, input$b4, input$b5)
+       d = -a1 * c(input$b1, input$b2, input$b3, input$b4, input$b5)
        params = data.frame('a1' = a1, 'd' = d)
   }
   else if(input$model == '3PL'){
        a1 = c(input$a1, input$a2, input$a3, input$a4, input$a5)
-       d = c(input$b1, input$b2, input$b3, input$b4, input$b5)
+       d = -a1 * c(input$b1, input$b2, input$b3, input$b4, input$b5)
        g = c(input$c1, input$c2, input$c3, input$c4, input$c5)
        params = data.frame('a1' = a1, 'd' = d, 'g' = g)
   }
