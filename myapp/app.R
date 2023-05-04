@@ -42,15 +42,15 @@ estimate_latent_trace = function(model, params, pattern, method){
 
 # User interface ----
 ui <- fluidPage(
-  wellPanel(titlePanel("Estimativa do traço latente utilizando o ML3 e com parâmetros dos itens conhecidos"),
-            hr(),
-            h4("As estimativas foram feitas utilizando o pacote mirt")),
+  wellPanel(titlePanel("Estimativa do traço latente com parâmetros dos itens conhecidos")
+            ),
   hr(),
   fluidRow(
     column(width = 4,
            radioButtons("method", label = h3("Método de Estimação"),
                         choices = list("Máxima verossimilhança" = "ML", "Moda à posteriori" = "MAP", "Esperança à posteriori" = "EAP"), 
                         selected = "ML"),
+           h6("As prioris são as default do pacote mirt nos métodos Bayesianos")
     ),
     column(width = 4,
            radioButtons("model", label = h3("Modelo"),
