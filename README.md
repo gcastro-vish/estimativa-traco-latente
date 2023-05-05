@@ -28,7 +28,7 @@ Depois de instalar todos os pré requisitos, iremos fazer as preparações de am
   
   1. [Configuração do Git](https://docs.github.com/en/get-started/quickstart/set-up-git#setting-up-git)
   
-  2. Com o Git configura, dê cd na pasta
+  2. Com o Git configurado, abra o Git Bash e dê cd na pasta
   
   ```git
   cd pasta
@@ -60,4 +60,4 @@ Isso não é recomendado pois o _deploy_ do aplicativo foi feito utilizando uma 
 <!-- HOW TO UPDATE -->
 ## Contribuições
 
-Toda contribuição é bem-vinda! Para sugerir modificações, crie e uma _branch_ com o nome `develop-nome-modificacao` (deve necessariamente começar com _**develop**_) e altere para dentro dela. Faça as as modificações necessárias, lembrando de dar _commit_ com as mensagens de mudança e crie um _pull request_. Mais informações sobre como fazer isso estão disponíveis [aqui](https://docs.github.com/en/get-started/quickstart/contributing-to-projects). Além disso, é possível utilizar o [VS Code como uma interface gráfica para o Git](https://code.visualstudio.com/docs/sourcecontrol/overview)
+Toda contribuição é bem-vinda! Para sugerir modificações, crie e uma _branch_ com o nome `develop-nome-modificacao` (deve necessariamente começar com _**develop**_) e altere para dentro dela. Faça as as modificações necessárias, lembrando de dar _commit_ com as mensagens de mudança e crie um _pull request_. Mais informações sobre como fazer isso estão disponíveis [aqui](https://docs.github.com/en/get-started/quickstart/contributing-to-projects). Além disso, é possível utilizar o [VS Code como uma interface gráfica para o Git](https://code.visualstudio.com/docs/sourcecontrol/overview).
